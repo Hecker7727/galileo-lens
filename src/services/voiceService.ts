@@ -2,9 +2,9 @@
 import { checkSpelling } from '../utils/spellCorrection';
 import { GenAILiveClient } from '../lib/genai-live-client';
 import { audioContext as getAudioContext } from '../lib/utils';
-// Reuse proven audio pipeline from the chatterbots project
-import { AudioRecorder } from '../../chatterbots/lib/audio-recorder';
-import { AudioStreamer } from '../../chatterbots/lib/audio-streamer';
+// Reuse proven audio pipeline from the local lib
+import { AudioRecorder } from '../lib/audio-recorder';
+import { AudioStreamer } from '../lib/audio-streamer';
 
 interface VoiceConfig {
   sampleRate: number;
