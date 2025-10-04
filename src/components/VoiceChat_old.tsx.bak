@@ -1,0 +1,522 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
+import { Badge } from './ui/badge';
+import { Progress } from './ui/progress';
+import { 
+  Mic, 
+  MicOff, 
+  Volume2, 
+  VolumeX, 
+  Phone, 
+  PhoneOff,
+  Activity,
+  Waves,
+  AlertCircle,
+  Shield,
+  ShieldCheck,
+  Chrome,
+  Globe
+} from 'lucide-react';
+import voiceService from '../services/voiceService';
+import ChatterBridge from './ChatterBridge';
+import { is608Publication, search608, publicationSpeechText } from '../services/knowledge608';
+
+interface VoiceChatProps {
+  onVoiceMessage: (message: string) => void;
+  isAiResponding: boolean;
+}
+
+export default function VoiceChat({ onVoiceMessage, isAiResponding }: VoiceChatProps) {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [status, setStatus] = useState('Not connected');
+  const [transcription, setTranscription] = useState('');
+  const [audioLevel, setAudioLevel] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [showTechStatus, setShowTechStatus] = useState(false);
+  
+  const audioLevelRef = useRef<number>(0);
+  const animationFrameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    // Setup voice service event handlers
+    voiceService.onTranscription((text: string) => {
+      setTranscription(text);
+      onVoiceMessage(text);
+      setIsListening(false);
+    });
+
+    voiceService.onResponse((audio: ArrayBuffer, text: string) => {
+      setIsSpeaking(true);
+      // Audio is played via speechSynthesis in the service
+      setTimeout(() => {
+        setIsSpeaking(false);
+      }, text.length * 50); // Rough estimate of speech duration
+    });
+
+    voiceService.onStatus((status: string) => {
+      setStatus(status);
+      if (status.includes('Error') || status.includes('Failed')) {
+        setError(status);
+      } else {
+        setError(null);
+      }
+    });
+
+    return () => {
+      stopListening();
+    };
+  }, [onVoiceMessage]);
+
+  useEffect(() => {
+    // Update listening state based on voice service
+    const checkState = () => {
+      setIsListening(voiceService.isCurrentlyListening());
+      setIsSpeaking(voiceService.isCurrentlySpeaking());
+      
+      if (voiceService.isCurrentlyListening()) {
+        // Animate audio level when listening
+        audioLevelRef.current = Math.random() * 100;
+        setAudioLevel(audioLevelRef.current);
+      } else {
+        setAudioLevel(0);
+      }
+    };
+
+    const interval = setInterval(checkState, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  const initializeVoice = async () => {
+    try {
+      setError(null);
+      setStatus('Initializing voice service...');
+      
+      // Check prerequisites first
+      if (!navigator.mediaDevices) {
+        setError('Voice features not supported in this browser. Please use Chrome, Firefox, or Edge.');
+        return;
+      }
+
+      if (!window.isSecureContext && window.location.hostname !== 'localhost') {
+        setError('Voice requires HTTPS connection. Voice features are disabled on unsecure connections.');
+        return;
+      }
+
+      const success = await voiceService.initialize();
+      setIsInitialized(success);
+      
+      if (!success) {
+        // Error message will be set by the voice service
+        // Just ensure we're not initialized
+        setIsInitialized(false);
+      }
+    } catch (error: any) {
+      console.error('Voice initialization error:', error);
+      setError(`Voice initialization failed: ${error.message || 'Unknown error'}`);
+      setIsInitialized(false);
+    }
+  };
+
+  const startListening = async () => {
+    if (!isInitialized) {
+      await initializeVoice();
+      if (!isInitialized) return;
+    }
+
+    try {
+      setError(null);
+      setTranscription('');
+      await voiceService.startListening();
+    } catch (error) {
+      console.error('Failed to start listening:', error);
+      setError('Failed to start voice recording');
+    }
+  };
+
+  const stopListening = async () => {
+    try {
+      await voiceService.stopListening();
+    } catch (error) {
+      console.error('Failed to stop listening:', error);
+    }
+  };
+
+  const disconnectVoice = async () => {
+    try {
+      await voiceService.destroy();
+      setIsInitialized(false);
+      setIsListening(false);
+      setIsSpeaking(false);
+      setStatus('Disconnected');
+      setTranscription('');
+      setAudioLevel(0);
+    } catch (error) {
+      console.error('Failed to disconnect voice service:', error);
+    }
+  };
+
+  const getStatusColor = () => {
+    if (error) return 'destructive';
+    if (isListening) return 'default';
+    if (isSpeaking || isAiResponding) return 'secondary';
+    if (isInitialized) return 'outline';
+    return 'outline';
+  };
+
+  const getBrowserInfo = () => {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes('Chrome')) return { name: 'Chrome', supported: true };
+    if (userAgent.includes('Firefox')) return { name: 'Firefox', supported: true };
+    if (userAgent.includes('Edge')) return { name: 'Edge', supported: true };
+    if (userAgent.includes('Safari')) return { name: 'Safari', supported: false };
+    return { name: 'Unknown', supported: false };
+  };
+
+  const getStatusText = () => {
+    if (error) return error;
+    if (isListening) return 'Listening...';
+    if (isSpeaking) return 'AI Speaking';
+    if (isAiResponding) return 'AI Thinking...';
+    if (isInitialized) return 'Ready for voice';
+    return status;
+  };
+
+  /**
+   * Handle speak requests from the chatterbot face or agent pipeline.
+   * This function restricts spoken output to content sourced from the "608 datas".
+   * Strategy:
+   *  - Try to find relevant 608 publications using the user's text as a query.
+   *  - If a 608 publication is found, extract a speech-safe summary and play via voiceService.speak().
+   *  - If nothing matches, do not speak external text.
+   */
+  const handleSpeakRequest = async (text: string) => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('🎤 Speak request received:', text);
+
+      // Short-circuit for the built-in test button so it always returns audible feedback
+      // during debugging even if no publications are marked as "608".
+      const lower = String(text || '').toLowerCase();
+      if (lower.includes('test audio')) {
+        const testMessage = 'This is a test audio from the 608 dataset. If you can hear this, text-to-speech is working.';
+        // eslint-disable-next-line no-console
+        console.log('🔧 Test audio requested — speaking canned message');
+        if (voiceService && typeof voiceService.speak === 'function') {
+          await voiceService.speak(testMessage);
+          // eslint-disable-next-line no-console
+          console.log('✅ Test TTS completed');
+        } else {
+          // eslint-disable-next-line no-console
+          console.error('❌ voiceService.speak not available for test audio');
+        }
+        return;
+      }
+
+      const matches = await search608(text);
+      let speakText = '';
+      if (matches && matches.length > 0) {
+        speakText = publicationSpeechText(matches[0]);
+        // eslint-disable-next-line no-console
+        console.log('📚 Found 608 match, speaking:', speakText);
+      } else {
+        // eslint-disable-next-line no-console
+        console.warn('❌ No 608 dataset match for speak request:', text);
+        return;
+      }
+
+      if (!speakText || speakText.trim().length === 0) {
+        // eslint-disable-next-line no-console
+        console.warn('⚠️ Empty speak text, not speaking');
+        return;
+      }
+
+      // Delegate to the existing voice service for TTS playback
+      if (voiceService && typeof voiceService.speak === 'function') {
+        // eslint-disable-next-line no-console
+        console.log('🔊 Calling voiceService.speak with:', speakText);
+        await voiceService.speak(speakText);
+        // eslint-disable-next-line no-console
+        console.log('✅ TTS request completed');
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('❌ voiceService.speak not available');
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('❌ handleSpeakRequest error:', err);
+    }
+  };
+
+  return (
+    <Card className="border-2 border-blue-200 dark:border-blue-800">
+      <CardContent className="p-4 space-y-4">
+        {/* Status Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Activity className="h-4 w-4 text-blue-500" />
+            <span className="text-sm font-medium">Voice Assistant</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowTechStatus(!showTechStatus)}
+              className="h-6 w-6 p-0"
+            >
+              {window.isSecureContext ? (
+                <ShieldCheck className="h-3 w-3 text-green-500" />
+              ) : (
+                <Shield className="h-3 w-3 text-yellow-500" />
+              )}
+            </Button>
+          </div>
+          <Badge 
+            variant={getStatusColor()} 
+            className={`text-xs ${
+              isListening ? 'voice-status-listening' :
+              isSpeaking || isAiResponding ? 'voice-status-speaking' :
+              error ? 'voice-status-error' :
+              isInitialized ? 'voice-status-ready' : ''
+            }`}
+          >
+            {getStatusText()}
+          </Badge>
+        </div>
+
+        {/* Technical Status (collapsible) */}
+        {showTechStatus && (
+          <div className="text-xs space-y-2 p-3 bg-muted rounded-lg">
+            <div className="flex items-center justify-between">
+              <span>Connection:</span>
+              <div className="flex items-center gap-1">
+                {window.isSecureContext ? (
+                  <ShieldCheck className="h-3 w-3 text-green-500" />
+                ) : (
+                  <Shield className="h-3 w-3 text-yellow-500" />
+                )}
+                <span className={window.isSecureContext ? 'text-green-600' : 'text-yellow-600'}>
+                  {window.isSecureContext ? 'Secure (HTTPS)' : 'Unsecure (HTTP)'}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Browser:</span>
+              <div className="flex items-center gap-1">
+                <Globe className="h-3 w-3" />
+                <span className={getBrowserInfo().supported ? 'text-green-600' : 'text-red-600'}>
+                  {getBrowserInfo().name} {getBrowserInfo().supported ? '✓' : '✗'}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Media API:</span>
+              <span className={navigator.mediaDevices ? 'text-green-600' : 'text-red-600'}>
+                {navigator.mediaDevices ? 'Available ✓' : 'Not Available ✗'}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Speech API:</span>
+              <span className={window.speechSynthesis ? 'text-green-600' : 'text-red-600'}>
+                {window.speechSynthesis ? 'Available ✓' : 'Not Available ✗'}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Voice Controls */}
+        <div className="flex items-center justify-center gap-3">
+          {!isInitialized ? (
+            <Button 
+              onClick={initializeVoice}
+              variant="default"
+              size="lg"
+              className="w-full max-w-xs"
+              disabled={isAiResponding}
+            >
+              <Phone className="h-4 w-4 mr-2" />
+              Connect Voice
+            </Button>
+          ) : (
+            <>
+              <Button
+                onClick={isListening ? stopListening : startListening}
+                variant="default"
+                size="lg"
+                className={`w-20 h-20 rounded-full ${
+                  isListening 
+                    ? 'mic-button-active' 
+                    : 'mic-button-ready'
+                }`}
+                disabled={isSpeaking || isAiResponding}
+              >
+                {isListening ? (
+                  <div className="flex items-center gap-1">
+                    <div className="w-1 h-4 bg-white rounded audio-bar"></div>
+                    <div className="w-1 h-4 bg-white rounded audio-bar"></div>
+                    <div className="w-1 h-4 bg-white rounded audio-bar"></div>
+                    <div className="w-1 h-4 bg-white rounded audio-bar"></div>
+                  </div>
+                ) : (
+                  <Mic className="h-8 w-8" />
+                )}
+              </Button>
+              
+              <div className="flex-1 max-w-xs space-y-2">
+                {/* Audio Level Indicator */}
+                {isListening && (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Volume2 className="h-3 w-3" />
+                      <span>Audio Level</span>
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="audio-level-bar h-full rounded-full transition-all duration-100"
+                        style={{ width: `${audioLevel}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Voice Actions */}
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={disconnectVoice}
+                    className="flex-1"
+                  >
+                    <PhoneOff className="h-3 w-3 mr-1" />
+                    Disconnect
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Transcription Display */}
+        {transcription && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Mic className="h-3 w-3" />
+              <span>You said:</span>
+            </div>
+            <div className="bg-muted p-3 rounded-lg text-sm">
+              "{transcription}"
+            </div>
+          </div>
+        )}
+
+        {/* Error Display */}
+        {error && (
+          <div className="space-y-3 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 text-destructive" />
+              <span className="text-sm text-destructive font-medium">Voice Setup Issue</span>
+            </div>
+            <p className="text-xs text-destructive/80 leading-relaxed">{error}</p>
+            
+            {/* Helpful instructions based on error type */}
+            {error.includes('denied') && (
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">To fix this:</p>
+                <p>1. Click the microphone icon in your browser's address bar</p>
+                <p>2. Select "Allow" for microphone access</p>
+                <p>3. Refresh the page and try again</p>
+              </div>
+            )}
+            
+            {error.includes('HTTPS') && (
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">Voice requires secure connection:</p>
+                <p>• Voice features work on HTTPS sites</p>
+                <p>• Or localhost during development</p>
+              </div>
+            )}
+            
+            {error.includes('Browser') && (
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">Recommended browsers:</p>
+                <p>• Chrome (latest version)</p>
+                <p>• Edge (latest version)</p>
+                <p>• Firefox (latest version)</p>
+              </div>
+            )}
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={initializeVoice}
+              className="mt-2"
+            >
+              Try Again
+            </Button>
+          </div>
+        )}
+
+        {/* Voice Instructions */}
+        <div className="text-xs text-muted-foreground space-y-1">
+          {!isInitialized && !error ? (
+            <>
+              <p>• Connect to enable voice interaction</p>
+              <p>• Microphone permissions required</p>
+              <p>• Works best with Chrome or Edge</p>
+              <p>• Requires HTTPS or localhost</p>
+            </>
+          ) : isInitialized ? (
+            <>
+              <p>• Click microphone to start speaking</p>
+              <p>• Speak clearly about NASA research topics</p>
+              <p>• AI responds with voice and text</p>
+              <p>• Internet connection required for AI</p>
+              <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-950 rounded text-xs">
+                <p className="font-medium text-blue-700 dark:text-blue-300">🔧 Debug:</p>
+                <p className="text-blue-600 dark:text-blue-400">Check browser console (F12) for audio logs</p>
+                <button
+                  onClick={() => handleSpeakRequest('test audio from 608 dataset')}
+                  className="mt-1 px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600"
+                >
+                  Test Audio
+                </button>
+                <button
+                  onClick={() => voiceService.playTestTone(600)}
+                  className="mt-1 ml-2 px-2 py-1 bg-indigo-500 text-white rounded text-xs hover:bg-indigo-600"
+                  title="Plays a short beep to verify audio output"
+                >
+                  Test Tone
+                </button>
+              </div>
+            </>
+          ) : null}
+        </div>
+
+        {/* Speaking Indicator */}
+        {(isSpeaking || isAiResponding) && (
+          <div className="flex items-center justify-center gap-2 p-2 bg-blue-50 dark:bg-blue-950 rounded-lg">
+            <div className="flex gap-1">
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+            </div>
+            <span className="text-xs text-blue-700 dark:text-blue-300">
+              {isAiResponding ? 'AI is thinking...' : 'AI is speaking...'}
+            </span>
+          </div>
+        )}
+
+        {/* Chatterbots face bridge (scoped to 608 dataset when speaking/listening) */}
+        <div className="mt-4">
+          <ChatterBridge
+            isPlaying={isListening}
+            onSpeakRequest={handleSpeakRequest}
+            publicationsFilter={is608Publication}
+            className="max-w-md mx-auto"
+            volume={audioLevel / 100}
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

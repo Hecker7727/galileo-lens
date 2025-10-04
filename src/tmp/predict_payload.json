@@ -1,0 +1,12 @@
+{
+  "input": {
+    "durationDays": 180,
+    "gravity": 0.38,
+    "subject": {
+      "age": 35,
+      "bmi": 24,
+      "activityLevel": "moderate"
+    }
+  },
+  "contextNotes": ["bone_loss", "limited_exercise_facility"]
+}
