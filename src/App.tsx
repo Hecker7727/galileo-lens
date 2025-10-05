@@ -14,11 +14,12 @@ import InteractiveStory from './components/InteractiveStory';
 import ChatInterface from './components/ChatInterface';
 import GapAnalysisView from './components/GapAnalysisView';
 import GamificationPage from './components/GamificationPage';
+import ResearchDNAPage from './components/ResearchDNAPage';
 import { XPTracker } from './components/XPTracker';
 import { SpaceBackground } from './components/SpaceBackground';
 import { getGraphData, getClusters, getMetrics, getSampleStory } from './data/graphData';
 import { Node, Edge, Cluster, MetricSeries, StoryDefinition } from './types/dataTypes';
-import { Rocket, Home, Brain, BarChart3, Activity, TrendingDown, Trophy } from 'lucide-react';
+import { Rocket, Home, Brain, BarChart3, Activity, TrendingDown, Trophy, Dna } from 'lucide-react';
 import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
@@ -396,6 +397,9 @@ export default function App() {
       case 'gamification':
         return <GamificationPage />;
       
+      case 'dna':
+        return <ResearchDNAPage />;
+      
       default:
         return null;
     }
@@ -476,6 +480,11 @@ export default function App() {
                   <TabsTrigger value="gamification" className="flex items-center gap-2 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-600 data-[state=active]:to-yellow-500 data-[state=active]:shadow-md data-[state=active]:text-white">
                     <Trophy className="h-4 w-4" />
                     <span className="hidden sm:inline">Achievements</span>
+                  </TabsTrigger>
+
+                  <TabsTrigger value="dna" className="flex items-center gap-2 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:shadow-md data-[state=active]:text-white">
+                    <Dna className="h-4 w-4" />
+                    <span className="hidden sm:inline">DNA Match</span>
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
