@@ -3,6 +3,14 @@
 **NASA Space Apps Challenge 2025 | Build the Biosignature**
 
 An AI-powered web application that transforms how researchers explore NASA's 608 bioscience publications through voice interactions, knowledge graphs, and intelligent analysis.
+##Project Links
+   **Live Demo and Video Presentation:** https://youtu.be/Eb1_c6nxKTE 
+
+   **Source Code:** https://github.com/Hecker7727/galileo-lens
+
+   **Project Execution link** : https://spacebiology.soulcloude.tech  
+
+   **Presentation:** https://docs.google.com/presentation/d/1iPFSw7z00tahMkVvLS9O_DAwgEWLCdS6/edit?usp=sharing&ouid=114692810431055005824&rtpof=true&sd=true 
 
 ## 🏆 Challenge Overview
 
