@@ -1,6 +1,6 @@
 # 🚀 Quick Visual Enhancements - Get Started in 30 Minutes
 
-This guide will help you add immediate visual improvements to your Galileo Lenses app with minimal effort.
+This guide will help you add immediate visual improvements to your Galileo's Lenses app with minimal effort.
 
 ---
 

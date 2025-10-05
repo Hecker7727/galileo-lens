@@ -1,4 +1,4 @@
-# Galileo Lenses - Project Overview
+# Galileo's Lenses - Project Overview
 
 ## 🚀 Challenge Addressed
 **NASA Space Apps Challenge 2025**  
@@ -10,7 +10,7 @@
 
 ## 📋 Executive Summary
 
-**Galileo Lenses** is an AI-powered web application that transforms how researchers, mission planners, and scientists explore NASA's 608 bioscience publications. By leveraging cutting-edge artificial intelligence, knowledge graphs, and interactive visualizations, we've created a dynamic dashboard that makes decades of space biology research accessible, actionable, and insightful.
+**Galileo's Lenses** is an AI-powered web application that transforms how researchers, mission planners, and scientists explore NASA's 608 bioscience publications. By leveraging cutting-edge artificial intelligence, knowledge graphs, and interactive visualizations, we've created a dynamic dashboard that makes decades of space biology research accessible, actionable, and insightful.
 
 ### What Makes Us Special
 - ✅ **All 608 NASA bioscience publications** fully integrated
@@ -230,7 +230,7 @@ First tool to combine publication search with direct data access:
 
 ## 🎓 Educational Value
 
-Galileo Lenses serves as:
+Galileo's Lenses serves as:
 - **Teaching Tool:** Helps students learn space biology research
 - **Research Training:** Demonstrates how to find and synthesize literature
 - **Public Outreach:** Makes NASA research accessible to everyone
@@ -254,7 +254,7 @@ Galileo Lenses serves as:
 
 ---
 
-## 🏆 Why Galileo Lenses Wins
+## 🏆 Why Galileo's Lenses Wins
 
 ### Innovation
 ✅ First-of-its-kind multi-modal AI research assistant  
@@ -298,4 +298,4 @@ Galileo Lenses serves as:
 
 ---
 
-**Galileo Lenses** - *Illuminating the path to safe human space exploration*
+**Galileo's Lenses** - *Illuminating the path to safe human space exploration*

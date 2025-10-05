@@ -1,7 +1,7 @@
 # OSDR Integration & Gap Analysis Features
 
 ## Overview
-Galileo Lenses now integrates with NASA's Open Science Data Repository (OSDR) and provides automated research gap analysis to identify under-studied areas in space bioscience.
+Galileo's Lenses now integrates with NASA's Open Science Data Repository (OSDR) and provides automated research gap analysis to identify under-studied areas in space bioscience.
 
 ---
 

@@ -1,5 +1,5 @@
 // NASA Research Papers Database
-// Real research publications with abstracts for the Galileo Lenses platform
+// Real research publications with abstracts for the Galileo's Lenses platform
 
 export const nasaPapersData = [
   {

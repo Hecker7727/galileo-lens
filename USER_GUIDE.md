@@ -1,6 +1,6 @@
-# Galileo Lenses - User Guide
+# Galileo's Lenses - User Guide
 
-## Welcome to Galileo Lenses! 👋
+## Welcome to Galileo's Lenses! 👋
 
 This guide will help you navigate and make the most of our AI-powered NASA bioscience research explorer.
 
@@ -9,12 +9,12 @@ This guide will help you navigate and make the most of our AI-powered NASA biosc
 ## 🚀 Getting Started
 
 ### Step 1: Launch the Platform
-1. Open Galileo Lenses in your web browser
+1. Open Galileo's Lenses in your web browser
 2. You'll see the **Homepage** with:
    - Project overview
    - Feature cards
    - Quick statistics (608 publications, AI tools, etc.)
-3. Click **"Launch Galileo Lenses"** or **"Enter Platform"** to begin
+3. Click **"Launch Galileo's Lenses"** or **"Enter Platform"** to begin
 
 ### Step 2: Explore the Main Interface
 Once inside, you'll see a navigation bar with these tabs:
@@ -438,7 +438,7 @@ Step 4: Return Journey
 **A:** AI systems can occasionally misinterpret data. Always check cited publications. Report issues through the feedback button.
 
 ### Q: Can I use this for my research paper?
-**A:** Absolutely! Galileo Lenses is a research tool. Cite the original NASA publications (provided with each answer), not the platform itself.
+**A:** Absolutely! Galileo's Lenses is a research tool. Cite the original NASA publications (provided with each answer), not the platform itself.
 
 ### Q: Is my data private?
 **A:** Yes! No personal data is collected. Conversations are not stored. API calls to Gemini are encrypted. See SECURITY.md for details.
@@ -519,6 +519,6 @@ Step 4: Return Journey
 
 ---
 
-**Galileo Lenses** - *Your AI companion for space biology research*
+**Galileo's Lenses** - *Your AI companion for space biology research*
 
 Happy exploring! 🚀

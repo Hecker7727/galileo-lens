@@ -1,4 +1,4 @@
-# 🚀 Galileo Lenses App - Improvement Roadmap
+# 🚀 Galileo's Lenses App - Improvement Roadmap
 
 ## ✅ Completed Improvements
 

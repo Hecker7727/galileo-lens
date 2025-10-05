@@ -1,4 +1,4 @@
-// Spell correction utilities for Galileo Lenses
+// Spell correction utilities for Galileo's Lenses
 // Focuses on scientific terms and common typos in space medicine research
 
 interface SpellCorrection {

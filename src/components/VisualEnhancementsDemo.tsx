@@ -2,7 +2,7 @@
  * Visual Enhancements Demo Page
  * 
  * This page demonstrates all the visual enhancements available
- * for the Galileo Lenses app. Use this as a reference and testing ground.
+ * for the Galileo's Lenses app. Use this as a reference and testing ground.
  */
 
 import React, { useState } from 'react';
@@ -31,7 +31,7 @@ export function VisualEnhancementsDemo() {
             Visual Enhancements Demo
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Explore all the visual effects available in Galileo Lenses
+            Explore all the visual effects available in Galileo's Lenses
           </p>
         </motion.div>
 

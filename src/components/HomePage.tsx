@@ -47,7 +47,7 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                     <Rocket className="h-8 w-8 text-blue-400" />
                   </motion.div>
                   <div>
-                    <h1 className="text-xl font-semibold">Galileo Lenses</h1>
+                    <h1 className="text-xl font-semibold">Galileo's Lenses</h1>
                     <p className="text-sm text-blue-200">AI-Powered NASA Bioscience Research Explorer</p>
                   </div>
                 </motion.div>
@@ -273,7 +273,7 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
               </CardHeader>
               <CardContent className="text-center space-y-4">
                 <p className="text-lg text-gray-200 leading-relaxed">
-                  <strong>Galileo Lenses</strong> addresses NASA's challenge to make decades of space biology 
+                  <strong>Galileo's Lenses</strong> addresses NASA's challenge to make decades of space biology
                   research accessible and actionable. We've built a dynamic dashboard that summarizes 608 NASA 
                   bioscience publications using AI, knowledge graphs, and interactive tools.
                 </p>
@@ -303,7 +303,7 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
         {/* Who Is This For */}
         <section className="container mx-auto px-4 py-12">
           <h3 className="text-3xl font-bold text-center mb-8 text-blue-200">
-            Who Benefits from Galileo Lenses?
+            Who Benefits from Galileo's Lenses?
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <Card className="bg-black/40 border-blue-500/30 backdrop-blur-sm">
@@ -354,7 +354,7 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all"
           >
             <Rocket className="mr-2 h-5 w-5" />
-            Launch Galileo Lenses
+            Launch Galileo's Lenses
           </Button>
           <p className="text-sm text-gray-400 mt-4">
             🎙️ Try voice chat • 🧠 Explore knowledge graphs • 📊 Analyze research gaps

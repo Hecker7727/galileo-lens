@@ -1,8 +1,8 @@
-# Galileo Lenses - Architecture Documentation
+# Galileo's Lenses - Architecture Documentation
 
 ## 🏗️ System Architecture Overview
 
-Galileo Lenses is built as a modern single-page application (SPA) with a clear separation between the user interface, AI services, and data layer.
+Galileo's Lenses is built as a modern single-page application (SPA) with a clear separation between the user interface, AI services, and data layer.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -594,4 +594,4 @@ galileo-lenses/
 
 ---
 
-**Galileo Lenses** - Built for scale, designed for clarity
+**Galileo's Lenses** - Built for scale, designed for clarity

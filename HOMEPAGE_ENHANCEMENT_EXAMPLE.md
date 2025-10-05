@@ -80,7 +80,7 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                     <Rocket className="h-8 w-8 text-blue-400" />
                   </motion.div>
                   <div>
-                    <h1 className="text-xl font-semibold">Galileo Lenses</h1>
+                    <h1 className="text-xl font-semibold">Galileo's Lenses</h1>
                     <p className="text-sm text-blue-200">AI-Powered NASA Bioscience Research Explorer</p>
                   </div>
                 </motion.div>

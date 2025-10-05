@@ -282,7 +282,7 @@ export default function ChatInterface() {
                       <Rocket className="h-6 w-6 text-purple-600" />
                       <div className="flex flex-col">
                         <div className="flex items-center gap-2">
-                          <h2 className="text-xl font-bold text-foreground">Galileo Lenses</h2>
+                          <h2 className="text-xl font-bold text-foreground">Galileo's Lenses</h2>
                           <span className="text-xs font-semibold px-2 py-0.5 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full">
                             v1.0
                           </span>

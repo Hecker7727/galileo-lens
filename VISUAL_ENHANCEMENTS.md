@@ -1,7 +1,7 @@
-# 🎨 Visual Enhancement Guide for Galileo Lenses
+# 🎨 Visual Enhancement Guide for Galileo's Lenses
 
 ## Overview
-This document outlines visual enhancement options to make the NASA Galileo Lenses app more engaging, intuitive, and visually appealing.
+This document outlines visual enhancement options to make the NASA Galileo's Lenses app more engaging, intuitive, and visually appealing.
 
 ---
 
@@ -378,7 +378,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Galileo Lenses',
+        name: 'Galileo\'s Lenses',
         short_name: 'Galileo',
         description: 'NASA Bioscience Research Explorer',
         theme_color: '#1e40af',

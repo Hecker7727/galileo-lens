@@ -2,7 +2,7 @@
 
 ## 🎉 Successfully Implemented!
 
-The visual enhancements for your Galileo Lenses app have been implemented. Your app now has beautiful animations and visual effects!
+The visual enhancements for your Galileo's Lenses app have been implemented. Your app now has beautiful animations and visual effects!
 
 ---
 
@@ -252,7 +252,7 @@ Ready-to-use components:
 
 ## 🚀 Enjoy Your Enhanced App!
 
-The visual improvements are live and running. Your NASA Galileo Lenses app now feels more polished, professional, and engaging!
+The visual improvements are live and running. Your NASA Galileo's Lenses app now feels more polished, professional, and engaging!
 
 ### Want More?
 Check out the other components in the `src/components/` folder:

@@ -2,7 +2,7 @@
 
 ## 🚀 What's Been Transformed
 
-Your NASA Galileo Lenses chat has been completely reimagined with a **stunning, unique visual experience** that stands out from generic AI chats!
+Your NASA Galileo's Lenses chat has been completely reimagined with a **stunning, unique visual experience** that stands out from generic AI chats!
 
 ## ✨ Unique Features Added
 
@@ -270,4 +270,4 @@ The chat now has:
 
 **Created by:** AI Assistant
 **Date:** October 5, 2025
-**Project:** NASA Galileo Lenses - Space Apps Challenge 2025
+**Project:** NASA Galileo's Lenses - Space Apps Challenge 2025

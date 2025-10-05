@@ -1,4 +1,4 @@
-# Galileo Lenses - AI-Powered NASA Bioscience Research Explorer
+# Galileo's Lenses - AI-Powered NASA Bioscience Research Explorer
 
 **NASA Space Apps Challenge 2025 | Build the Biosignature**
 
@@ -6,7 +6,7 @@ An AI-powered web application that transforms how researchers explore NASA's 608
 
 ## 🏆 Challenge Overview
 
-Galileo Lenses addresses NASA's challenge to make decades of space biology research accessible and actionable. We've built a dynamic dashboard that enables scientists, managers, and mission architects to:
+Galileo's Lenses addresses NASA's challenge to make decades of space biology research accessible and actionable. We've built a dynamic dashboard that enables scientists, managers, and mission architects to:
 
 - 🔍 **Search** 608 NASA publications with AI intelligence
 - 🎙️ **Talk** to Galileo AI assistant using natural voice
@@ -236,7 +236,7 @@ galileo-lenses/
    ```
 
 4. **Explore Features**
-   - Click "Launch Galileo Lenses" on homepage
+   - Click "Launch Galileo's Lenses" on homepage
    - Try voice chat with Galileo AI
    - Explore knowledge graphs
    - View gap analysis
@@ -248,7 +248,7 @@ Built for NASA Space Apps Challenge 2025. Contributions welcome for future enhan
 
 ## 📞 Contact
 
-- **Project Name**: Galileo Lenses
+- **Project Name**: Galileo's Lenses
 - **Challenge**: Build the Biosignature
 - **Event**: NASA Space Apps Challenge 2025
 - **Category**: AI & Machine Learning, Data Management
@@ -261,7 +261,7 @@ Built for NASA Space Apps Challenge 2025. Contributions welcome for future enhan
 
 ---
 
-**Galileo Lenses** - *Illuminating the path to safe human space exploration through AI-powered research insights*
+**Galileo's Lenses** - *Illuminating the path to safe human space exploration through AI-powered research insights*
 - [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) - Audio processing
 
 ## 🐛 Troubleshooting

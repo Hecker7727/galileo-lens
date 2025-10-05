@@ -172,7 +172,7 @@ export async function ask(prompt: string, opts: AskOptions = {}): Promise<LLMRes
     }
     
     // Create system prompt that strictly constrains AI to use only provided papers
-  const systemPrompt = `You are Galileo Lenses AI, a research assistant that ONLY analyzes and reports on the specific NASA research publications provided in this database. You have access to ${contextInfo.totalPublications} NASA research publications covering areas like ${contextInfo.researchAreas.join(', ')}.
+  const systemPrompt = `You are Galileo's Lenses AI, a research assistant that ONLY analyzes and reports on the specific NASA research publications provided in this database. You have access to ${contextInfo.totalPublications} NASA research publications covering areas like ${contextInfo.researchAreas.join(', ')}.
 ${languageInstruction}${conversationContext}${urlContextSection}
 CRITICAL CONSTRAINTS:
 - You MUST ONLY use information from the provided NASA research papers in the database
