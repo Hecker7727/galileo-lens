@@ -12,6 +12,7 @@ import VoiceChat from './VoiceChat';
 import { ChatMessage as ChatMessageType } from '../types/dataTypes';
 import { ask } from '../services/geminiService';
 import { checkSpelling } from '../utils/spellCorrection';
+import { useGamification } from '../hooks/useGamification';
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<ChatMessageType[]>([
@@ -41,6 +42,9 @@ export default function ChatInterface() {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastScrollHeight = useRef<number>(0);
+  
+  // Gamification tracking
+  const { trackChatMessage, trackSearch } = useGamification();
 
   // Available languages for chat
   const languages = [
@@ -149,6 +153,9 @@ export default function ChatInterface() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    
+    // Track chat message for gamification
+    trackChatMessage(originalText);
 
     // If corrections were made, show a subtle notification
     if (spellCheck.hasSuggestions && correctedText !== originalText) {
@@ -185,6 +192,11 @@ export default function ChatInterface() {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+      
+      // Track search if it was a search-like query
+      if (originalText.toLowerCase().includes('search') || originalText.toLowerCase().includes('find')) {
+        trackSearch(originalText);
+      }
     } catch (error) {
       console.error('Failed to get AI response:', error);
       
