@@ -410,7 +410,7 @@ export default function App() {
     <div className="min-h-screen bg-background relative">
       <SpaceBackground variant="minimal" />
       <motion.header 
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: 0, opacity: 1 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="sticky top-0 z-40 border-b bg-gradient-to-r from-slate-900/90 via-blue-950/80 to-purple-950/90 text-white backdrop-blur-md"
@@ -423,8 +423,8 @@ export default function App() {
                   <Rocket className="h-6 w-6 text-white/90" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold leading-tight">Galileo's Lenses</h1>
-                  <p className="text-xs text-slate-300">Mission Health Analytics</p>
+                  <h1 className="text-lg font-semibold leading-tight" style={{ color: '#ffffff', fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.8)', backgroundColor: 'rgba(0,0,0,0.3)', padding: '2px 8px', borderRadius: '4px' }}>Galileo's Lenses</h1>
+                  <p className="text-xs" style={{ color: '#ffffff', opacity: 1, textShadow: '0 1px 2px rgba(0,0,0,0.8)', backgroundColor: 'rgba(0,0,0,0.3)', padding: '2px 8px', borderRadius: '4px', marginTop: '4px' }}>Mission Health Analytics</p>
                 </div>
               </div>
 
