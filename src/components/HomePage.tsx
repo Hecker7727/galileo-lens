@@ -47,8 +47,8 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                     <Rocket className="h-8 w-8 text-blue-400" />
                   </motion.div>
                   <div>
-                    <h1 className="text-xl font-semibold text-white">Galileo's Lenses</h1>
-                    <p className="text-sm text-blue-200">AI-Powered NASA Bioscience Research Explorer</p>
+                    <h1 className="text-xl font-semibold" style={{ color: '#ffffff', fontWeight: 'bold' }}>Galileo's Lenses</h1>
+                    <p className="text-sm" style={{ color: '#bfdbfe' }}>AI-Powered NASA Bioscience Research Explorer</p>
                   </div>
                 </motion.div>
                 <motion.div

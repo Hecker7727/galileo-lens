@@ -423,8 +423,8 @@ export default function App() {
                   <Rocket className="h-6 w-6 text-white/90" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold leading-tight text-white">Galileo's Lenses</h1>
-                  <p className="text-xs text-slate-200">Mission Health Analytics</p>
+                  <h1 className="text-lg font-semibold leading-tight" style={{ color: '#ffffff', fontWeight: 'bold' }}>Galileo's Lenses</h1>
+                  <p className="text-xs" style={{ color: '#ffffff', opacity: 0.9 }}>Mission Health Analytics</p>
                 </div>
               </div>
 
