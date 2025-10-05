@@ -516,3 +516,15 @@ html {
   background: linear-gradient(to top, #22c55e, #16a34a, #fbbf24);
   transition: height 0.1s ease-out;
 }
+
+/* Remove black bars from images */
+.no-black-bars {
+  background: transparent;
+  mix-blend-mode: screen;
+}
+
+.image-no-letterbox {
+  object-fit: contain;
+  background: transparent;
+  image-rendering: crisp-edges;
+}

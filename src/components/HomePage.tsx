@@ -98,8 +98,20 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                 hidden: { opacity: 0, y: 50 },
                 visible: { opacity: 1, y: 0 }
               }}
+              className="mb-8"
             >
-              <img src="/galileos-lens.jpg" alt="Galileo's Lens" className="mx-auto mb-8 max-h-96" />
+              <div className="relative mx-auto max-w-md overflow-hidden rounded-lg bg-transparent">
+                <img 
+                  src="/galileos-lens.jpg" 
+                  alt="Galileo's Lens" 
+                  className="w-full h-auto object-contain no-black-bars" 
+                  style={{ 
+                    filter: 'contrast(1.15) brightness(1.1)',
+                    mixBlendMode: 'screen',
+                    maxHeight: '400px'
+                  }}
+                />
+              </div>
             </motion.div>
             <motion.div
               variants={{
