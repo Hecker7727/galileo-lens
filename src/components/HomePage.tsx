@@ -63,22 +63,20 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                 </motion.div>
               </div>
               <div className="flex items-center gap-3">
-                <motion.a
+                <a
                   href="https://github.com/Hecker7727/galileo-lens"
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   className="inline-flex"
                 >
                   <Button 
                     variant="outline"
-                    className="bg-gray-800/80 hover:bg-gray-700 text-white border-gray-600 hover:border-gray-500"
+                    className="bg-gray-800/80 hover:bg-gray-700 text-white border-gray-600 hover:border-gray-500 transition-all hover:scale-105 active:scale-95"
                   >
-                    <Github className="mr-2 h-5 w-5" />
+                    <Github className="mr-2 h-7 w-7" />
                     GitHub
                   </Button>
-                </motion.a>
+                </a>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
