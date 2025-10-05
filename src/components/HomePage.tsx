@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { AnimatedCounter } from './EnhancedCard';
+import AboutUs from './AboutUs';
 import { Rocket, Activity, Brain, Users, BarChart3, Zap, BookOpen, Mic, TrendingUp, Database, Search, Award } from 'lucide-react';
 
 interface HomePageProps {
@@ -358,6 +359,9 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
             </Card>
           </div>
         </section>
+
+        {/* About Us / Team Section */}
+        <AboutUs />
 
         {/* Call to Action */}
         <section className="container mx-auto px-4 py-16 text-center">
