@@ -99,6 +99,14 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                 visible: { opacity: 1, y: 0 }
               }}
             >
+              <img src="/galileos-lens.jpg" alt="Galileo's Lens" className="mx-auto mb-8 max-h-96" />
+            </motion.div>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0 }
+              }}
+            >
               <Badge className="bg-purple-600/30 text-purple-200 border-purple-400/50 px-4 py-2 mb-4">
                 NASA Space Apps Challenge 2025 • Build the Biosignature
               </Badge>
