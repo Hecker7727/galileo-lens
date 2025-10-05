@@ -116,7 +116,7 @@ export default function GamificationPage() {
         </div>
 
         {/* User Stats Card */}
-        <Card className="border-2 border-purple-200 bg-gradient-to-r from-purple-600 to-blue-600 text-white overflow-hidden relative">
+        <Card className="border-2 border-purple-200 bg-gradient-to-r from-purple-600 to-blue-600 text-white overflow-hidden relative shadow-2xl">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
           <CardContent className="pt-6 relative z-10">
             <div className="flex items-center justify-between mb-6">
@@ -124,7 +124,7 @@ export default function GamificationPage() {
                 <motion.div
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}
-                  className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-4xl backdrop-blur-sm"
+                  className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-4xl backdrop-blur-sm shadow-lg"
                 >
                   {userProgress.level >= 10 ? '👑' : userProgress.level >= 5 ? '⭐' : '🚀'}
                 </motion.div>
@@ -141,43 +141,49 @@ export default function GamificationPage() {
                       <Button size="sm" variant="secondary" onClick={handleUsernameUpdate}>
                         Save
                       </Button>
-                      <Button size="sm" variant="ghost" onClick={() => setEditingUsername(false)}>
+                      <Button size="sm" variant="ghost" className="text-white hover:text-white hover:bg-white/20" onClick={() => setEditingUsername(false)}>
                         Cancel
                       </Button>
                     </div>
                   ) : (
                     <h2 
-                      className="text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
+                      className="text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity text-white"
                       onClick={() => setEditingUsername(true)}
                     >
                       {userProgress.username}
                     </h2>
                   )}
-                  <p className="text-sm opacity-90">Research Explorer</p>
+                  <p className="text-sm opacity-90 text-white">Research Explorer</p>
                 </div>
               </div>
               
-              <div className="text-right">
-                <div className="text-5xl font-bold">Level {userProgress.level}</div>
-                <div className="text-sm opacity-90">Global Rank: #{userRank}</div>
+              <div className="text-right text-white">
+                <div className="text-5xl font-bold text-white">Level {userProgress.level}</div>
+                <div className="text-sm opacity-90 text-white">Global Rank: #{userRank}</div>
               </div>
             </div>
             
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>{levelProgress.current} / {levelProgress.needed} XP</span>
-                <span>{Math.round(levelProgress.percentage)}%</span>
+            <div className="space-y-2 text-white">
+              <div className="flex justify-between text-sm text-white">
+                <span className="text-white">{levelProgress.current} / {levelProgress.needed} XP</span>
+                <span className="text-white">{Math.round(levelProgress.percentage)}%</span>
               </div>
-              <Progress 
-                value={levelProgress.percentage} 
-                className="h-3 bg-white/20"
-              />
-              <p className="text-xs opacity-75 text-center">
+              <div className="relative">
+                <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${levelProgress.percentage}%` }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-white rounded-full shadow-lg"
+                  />
+                </div>
+              </div>
+              <p className="text-xs opacity-90 text-center text-white">
                 {levelProgress.needed - levelProgress.current} XP to Level {userProgress.level + 1}
               </p>
             </div>
 
-            <div className="grid grid-cols-5 gap-4 mt-6 pt-6 border-t border-white/20">
+            <div className="grid grid-cols-5 gap-4 mt-6 pt-6 border-t border-white/30">
               <StatBadge icon={BookOpen} label="Publications" value={userProgress.stats.publicationsViewed} />
               <StatBadge icon={Search} label="Searches" value={userProgress.stats.searchesMade} />
               <StatBadge icon={MessageSquare} label="Chat Messages" value={userProgress.stats.chatMessages} />
@@ -236,10 +242,10 @@ export default function GamificationPage() {
 // Stat Badge Component
 function StatBadge({ icon: Icon, label, value }: { icon: any; label: string; value: number }) {
   return (
-    <div className="text-center">
-      <Icon className="h-5 w-5 mx-auto mb-1 opacity-80" />
-      <div className="text-2xl font-bold">{value}</div>
-      <div className="text-xs opacity-75">{label}</div>
+    <div className="text-center text-white">
+      <Icon className="h-5 w-5 mx-auto mb-1 opacity-90" />
+      <div className="text-2xl font-bold text-white">{value}</div>
+      <div className="text-xs opacity-90">{label}</div>
     </div>
   );
 }
