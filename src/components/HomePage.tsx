@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { AnimatedCounter } from './EnhancedCard';
-import { Rocket, Activity, Brain, Users, BarChart3, Zap, BookOpen, Mic, TrendingUp, Database, Search, Award } from 'lucide-react';
+import { Rocket, Activity, Brain, Users, BarChart3, Zap, BookOpen, Mic, TrendingUp, Database, Search, Award, Github } from 'lucide-react';
 
 interface HomePageProps {
   onEnterPlatform: () => void;
@@ -62,17 +62,33 @@ export default function HomePage({ onEnterPlatform }: HomePageProps) {
                   </Badge>
                 </motion.div>
               </div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button 
-                  onClick={onEnterPlatform}
-                  className="bg-blue-600 hover:bg-blue-700 text-white border-blue-400"
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://github.com/Hecker7727/galileo-lens"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex"
                 >
-                  Enter Platform
-                </Button>
-              </motion.div>
+                  <Button 
+                    variant="outline"
+                    className="bg-gray-800/80 hover:bg-gray-700 text-white border-gray-600 hover:border-gray-500 transition-all hover:scale-105 active:scale-95"
+                  >
+                    <Github className="mr-2 h-7 w-7" />
+                    GitHub
+                  </Button>
+                </a>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button 
+                    onClick={onEnterPlatform}
+                    className="bg-blue-600 hover:bg-blue-700 text-white border-blue-400"
+                  >
+                    Enter Platform
+                  </Button>
+                </motion.div>
+              </div>
             </div>
           </div>
         </motion.header>
